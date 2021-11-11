@@ -5,6 +5,7 @@ import web.model.Car;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CarService {
@@ -23,10 +24,6 @@ public class CarService {
     }
 
     public List<Car> getCars(int amount) {
-        List<Car> result = new ArrayList<>();
-        for(int i = 0; i < Math.min(cars.size(), amount); i++) {
-            result.add(cars.get(i));
-        }
-        return result;
+        return cars.stream().limit(amount).collect(Collectors.toList());
     }
 }
