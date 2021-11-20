@@ -3,13 +3,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Users CRUD table</title>
 </head>
 <body>
 <div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
+    <form th:method="get" th:action="@{/new}">
+        <input type="submit" value="New">
+    </form><br>
+
+    <table th:border="1">
+        <tr>
+            <th>Username</th>
+        </tr>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.getName()}">Username</td>
+            <td><a th:href="@{/{id}(id=${user.getId()})}">Info</a></td>
+            <td><a th:href="@{/{id}/edit(id=${user.getId()})}">Edit</a></td>
+        </tr>
+
+
+    </table>
 </div>
 </body>
 </html>
