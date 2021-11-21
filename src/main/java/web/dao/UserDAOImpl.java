@@ -35,32 +35,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void d(long id) {
+    public void delete(long id) {
         User user = getUserById(id);
         user.setState(User.STATE_DELETED);
-
-        //sessionFactory.getCurrentSession().remove(user);
-        //sessionFactory.getCurrentSession().delete(user);
-        //User user = getUserById(id);
-        /*EntityManager entityManager = sessionFactory.getCurrentSession().getEntityManagerFactory().createEntityManager();
-
-        entityManager.createNativeQuery("delete from User where id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
-        entityManager.flush();
-        entityManager.clear();*/
-        /*
-        User user = entityManager.find(User.class, id);
-        if (user != null) {
-            entityManager.remove(user);
-            entityManager.flush();
-            entityManager.clear();/*
-            sessionFactory.getCurrentSession().delete(user);
-            sessionFactory.getCurrentSession().flush();
-            sessionFactory.getCurrentSession().clear();*/
-        /*} else {
-            throw new IllegalArgumentException("Wrong user id");
-        }*/
     }
 
     public List<User> getAllUsers() {
