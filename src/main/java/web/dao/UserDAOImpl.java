@@ -3,6 +3,7 @@ package web.dao;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import web.model.State;
 import web.model.User;
 
 import javax.transaction.Transactional;
@@ -17,7 +18,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void add(User user) {
-        user.setState(User.STATE_ACTIVE);
+        user.setState(State.ACTIVE);
         sessionFactory.getCurrentSession().persist(user);
     }
 
@@ -37,7 +38,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void delete(long id) {
         User user = getUserById(id);
-        user.setState(User.STATE_DELETED);
+        user.setState(State.DELETED);
     }
 
     public List<User> getAllUsers() {

@@ -11,7 +11,7 @@ public class User {
     public static final byte STATE_DELETED = 2;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -24,8 +24,9 @@ public class User {
     @Column(name = "age")
     private byte age;
 
+    @Enumerated
     @Column(name = "state")
-    private byte state;
+    private State state;
 
     public User() {
     }
@@ -79,11 +80,11 @@ public class User {
                 '}';
     }
 
-    public byte getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(byte state) {
+    public void setState(State state) {
         this.state = state;
     }
 
