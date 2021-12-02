@@ -42,6 +42,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public List<User> getAllUsers() {
-        return sessionFactory.getCurrentSession().createQuery("from User where state != 2", User.class).getResultList();
+        return sessionFactory.getCurrentSession().createQuery("from User where state != " + State.DELETED.ordinal(), User.class).getResultList();
     }
 }

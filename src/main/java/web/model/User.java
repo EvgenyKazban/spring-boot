@@ -6,9 +6,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 public class User {
-    public static final byte STATE_ACTIVE = 0;
-    public static final byte STATE_INACTIVE = 1;
-    public static final byte STATE_DELETED = 2;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
