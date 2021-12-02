@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<h1>Profile</h1>
+<div>
+    <table th:border="1">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <th th:text="${user.getName()}">Name</th>
+            <th th:text="${user.getEmail()}">Email</th>
+            <th th:text="${user.getAge()">Age</th>
+        </tr>
+
+    </table>
+</div>
+</body>
+</html>
+
+
+

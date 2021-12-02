@@ -1,11 +1,16 @@
 package web.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +20,20 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name="password")
+    private String password;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "age")
     private byte age;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns=@JoinColumn(name="user_id"),
+            inverseJoinColumns=@JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     @Enumerated
     @Column(name = "state")
@@ -28,10 +42,14 @@ public class User {
     public User() {
     }
 
-    public User(String name, String role, byte age) {
+    public User(String name, String email, byte age) {
         this.name = name;
-        this.role = role;
+        this.email = email;
         this.age = age;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -42,12 +60,12 @@ public class User {
         this.name = name;
     }
 
-    public String getRole() {
-        return role;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public byte getAge() {
@@ -66,15 +84,13 @@ public class User {
         this.id = id;
     }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", role='" + role + '\'' +
-                ", age=" + age +
-                ", state=" + state +
-                '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
     }
 
     public State getState() {
@@ -86,15 +102,45 @@ public class User {
     }
 
     @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return age == user.age && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(role, user.role) && state == user.state;
+        return age == user.age && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles) && state == user.state;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, role, age, state);
+        return Objects.hash(id, name, password, email, age, roles, state);
     }
 }

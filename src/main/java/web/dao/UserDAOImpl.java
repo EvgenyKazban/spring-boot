@@ -31,14 +31,20 @@ public class UserDAOImpl implements UserDAO {
     public void update(long id, User updatedUser) {
         User user = getUserById(id);
         user.setName(updatedUser.getName());
-        user.setRole(updatedUser.getRole());
+        user.setEmail(updatedUser.getEmail());
         user.setAge(updatedUser.getAge());
+        user.setPassword(updatedUser.getPassword());
     }
 
     @Override
     public void delete(long id) {
         User user = getUserById(id);
         user.setState(State.DELETED);
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        return sessionFactory.getCurrentSession().createQuery("from User where name = :name", User.class).setParameter("name", name).getSingleResult();
     }
 
     public List<User> getAllUsers() {

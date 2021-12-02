@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import web.model.Role;
 import web.model.User;
 
 import javax.sql.DataSource;
@@ -49,7 +50,7 @@ public class DbConfig {
         //props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setAnnotatedClasses(User.class, Role.class);
         return factoryBean;
     }
 
